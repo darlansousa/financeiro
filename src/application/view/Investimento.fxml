@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPaneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.InvestimentoController">
+   <bottom>
+      <GridPane prefHeight="21.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="136.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="916.0" minWidth="10.0" prefWidth="878.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="lblMercado" prefHeight="15.0" prefWidth="201.0" text="Mercado fechado" textFill="#c92500">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDtAtualizacao" alignment="CENTER" contentDisplay="CENTER" text="Última atualização" textAlignment="CENTER" GridPane.columnIndex="1" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </GridPane>
+   </bottom>
+   <center>
+      <AnchorPane id="#paleta" prefHeight="104.0" prefWidth="1024.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <AnchorPane prefHeight="98.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane prefHeight="92.0" prefWidth="753.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.0" minWidth="10.0" prefWidth="1.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="300.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="4.0" minWidth="0.0" prefWidth="0.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.0" minWidth="10.0" prefWidth="1.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.0" minWidth="10.0" prefWidth="1.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.0" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.0" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="TOP_CENTER" text="Registros" textFill="#000000bf" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="Totais" textFill="#000000c0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="Grupos" textFill="#000000bf" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="API" textFill="#000000bf" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="1" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="3" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="5" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="7" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnNovo" contentDisplay="TOP" layoutX="15.0" layoutY="13.0" mnemonicParsing="false" onAction="#novo" prefHeight="58.0" prefWidth="54.0" text="Novo" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="10.0">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/novo.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnEditar" disable="true" layoutX="76.0" layoutY="13.0" mnemonicParsing="false" onAction="#editar" prefHeight="26.0" prefWidth="100.0" text="Editar" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/icons8-edit-30.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRemover" disable="true" layoutX="76.0" layoutY="45.0" mnemonicParsing="false" onAction="#remover" prefHeight="26.0" prefWidth="100.0" text="Remover" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/icons8-delete-row-30.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <GridPane alignment="TOP_RIGHT" prefHeight="63.0" prefWidth="292.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="148.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="54.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" text="Total Investido:" />
+                              <Label text="Total Atual:" GridPane.rowIndex="1" />
+                              <Label text="Total de Rendimentos:" GridPane.rowIndex="2" />
+                              <Label fx:id="lblTotalInvestido" text="R$ 0,00" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblTotalAtual" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblTotalRendimentos" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+                     <children>
+                        <ComboBox fx:id="comboGrupo" layoutX="46.0" layoutY="11.0" prefHeight="25.0" prefWidth="143.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Label fx:id="lblPercentualGrupo" alignment="CENTER" layoutX="20.0" layoutY="44.0" text="Meta de percentual: 0%" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="44.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6">
+                     <children>
+                        <Button fx:id="btnAtualizar" contentDisplay="TOP" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#atualizar" prefHeight="25.0" prefWidth="158.0" text="Atualizar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/icons8-api-30.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8">
+                     <children>
+                        <Button fx:id="btnTodasColunas" layoutY="13.0" mnemonicParsing="false" onAction="#todasColunas" prefHeight="28.0" prefWidth="73.0" text="Mostrar tudo" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/icons8-adicionar-coluna-30.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <MenuButton fx:id="btnColunas" alignment="CENTER" layoutX="17.0" layoutY="48.0" mnemonicParsing="false" styleClass="menu-button-pane" text="Selecionar" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="45.0">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/icons8-selecionar-coluna-30.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuButton>
+                     </children>
+                  </AnchorPane>
+                  <Separator layoutX="834.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="10" />
+                  <Label text="Colunas" textFill="#000000bf" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

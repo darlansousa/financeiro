@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ObjetivoController">
+   <top>
+      <AnchorPane id="paleta" prefHeight="89.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnNovo" layoutX="30.0" layoutY="50.0" mnemonicParsing="false" onAction="#novo" text="Novo" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="50.0">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/novo.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btnEditar" disable="true" layoutX="111.0" layoutY="50.0" mnemonicParsing="false" onAction="#editar" text="Editar" AnchorPane.bottomAnchor="15.0">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/icons8-edit-30.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btnRemover" disable="true" layoutX="198.0" layoutY="50.0" mnemonicParsing="false" onAction="#remover" text="Remover" AnchorPane.bottomAnchor="15.0">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/icons8-delete-row-30.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Label layoutX="22.0" layoutY="9.0" text="Objetivos" textFill="#ff9900" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="verDetalhe" disable="true" layoutX="751.0" layoutY="51.0" mnemonicParsing="false" onAction="#openDetalhes" prefHeight="26.0" prefWidth="216.0" text="Detalhe do planejamento" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/icons8-timeline-week-30.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <TableView fx:id="tblObjetivo" prefHeight="182.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="clnId" prefWidth="64.0" text="Código" />
+          <TableColumn fx:id="clnDescricao" prefWidth="378.0" text="Descrição" />
+            <TableColumn fx:id="clnValor" prefWidth="91.0" text="Valor" />
+            <TableColumn fx:id="clnInicio" prefWidth="169.0" text="Início" />
+            <TableColumn fx:id="clnQuando" prefWidth="245.0" text="Quando" />
+        </columns>
+      </TableView>
+   </bottom>
+   <center>
+      <AnchorPane id="paleta" prefHeight="229.0" prefWidth="721.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="txtId" disable="true" layoutX="100.0" layoutY="55.0" prefHeight="26.0" prefWidth="50.0" AnchorPane.leftAnchor="100.0" />
+            <TextField fx:id="txtDescricao" disable="true" layoutX="100.0" layoutY="91.0" prefHeight="26.0" prefWidth="383.0" AnchorPane.leftAnchor="100.0" />
+            <TextField fx:id="txtValor" disable="true" layoutX="100.0" layoutY="128.0" prefHeight="26.0" prefWidth="129.0" AnchorPane.leftAnchor="100.0" />
+            <DatePicker fx:id="dtQuando" disable="true" layoutX="100.0" layoutY="164.0" AnchorPane.leftAnchor="100.0" />
+            <ColorPicker fx:id="pickCor" disable="true" layoutX="100.0" layoutY="200.0" AnchorPane.leftAnchor="100.0" />
+            <Label layoutX="20.0" layoutY="60.0" text="Código" textFill="#646464" AnchorPane.leftAnchor="20.0" />
+            <Label layoutX="20.0" layoutY="96.0" text="Descrição" textFill="#646464" AnchorPane.leftAnchor="20.0" />
+            <Label layoutX="20.0" layoutY="169.0" text="Quando" textFill="#646464" AnchorPane.leftAnchor="20.0" />
+            <Label layoutX="20.0" layoutY="133.0" text="Orçamento" textFill="#646464" AnchorPane.leftAnchor="20.0" />
+            <Button fx:id="btnCancelar" disable="true" layoutX="621.0" layoutY="188.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" textFill="#02aaff" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
+            <Button fx:id="btnSalvar" disable="true" layoutX="535.0" layoutY="188.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" textFill="#02aaff" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="108.0" />
+            <Label layoutX="667.0" layoutY="60.0" prefHeight="16.0" prefWidth="73.0" text="Planejado" textFill="#646464" AnchorPane.leftAnchor="667.0" AnchorPane.rightAnchor="160.0" />
+            <TextField fx:id="txtPlanejado" disable="true" layoutX="751.0" layoutY="55.0" prefHeight="26.0" prefWidth="129.0" AnchorPane.rightAnchor="20.0" />
+            <Label layoutX="617.0" layoutY="97.0" prefHeight="16.0" prefWidth="139.0" text="Em quantos meses" textFill="#646464" AnchorPane.rightAnchor="160.0" />
+            <TextField fx:id="txtMeses" disable="true" layoutX="751.0" layoutY="92.0" prefHeight="26.0" prefWidth="129.0" AnchorPane.rightAnchor="20.0" />
+            <Label layoutX="651.0" layoutY="133.0" prefHeight="16.0" prefWidth="101.0" text="Total atingido" textFill="#646464" AnchorPane.rightAnchor="160.0" />
+            <TextField fx:id="txtTotal" disable="true" layoutX="751.0" layoutY="128.0" prefHeight="26.0" prefWidth="129.0" AnchorPane.rightAnchor="20.0" />
+            <Label layoutX="670.0" layoutY="169.0" prefHeight="16.0" prefWidth="78.0" text="Ainda falta" textFill="#646464" AnchorPane.rightAnchor="160.0" />
+            <TextField fx:id="txtAndaFalta" disable="true" layoutX="751.0" layoutY="164.0" prefHeight="26.0" prefWidth="129.0" AnchorPane.rightAnchor="20.0" />
+            <ProgressBar fx:id="barConcluido" layoutX="20.0" layoutY="4.0" minHeight="15.0" prefHeight="10.0" prefWidth="860.0" progress="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+            <Label layoutX="20.0" layoutY="205.0" text="Cor" textFill="#646464" AnchorPane.leftAnchor="20.0" />
+            <TextField fx:id="txtOrcado" disable="true" layoutX="707.0" layoutY="200.0" prefWidth="129.0" AnchorPane.rightAnchor="19.0" />
+            <Label layoutX="701.0" layoutY="205.0" text="Total Orçado" textFill="#646464" AnchorPane.rightAnchor="160.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
