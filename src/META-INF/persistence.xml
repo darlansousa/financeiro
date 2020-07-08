@@ -17,11 +17,13 @@
 			<property name="hibernate.connection.password" value="Caronte1212#" />
 <!--             <property name="hibernate.hbm2ddl.auto" value="create" /> -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.order_inserts" value="true"/>
+			<property name="hibernate.order_updates" value="true"/>
  
             <!--Configuracoes de Debug-->
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
-			<property name="use_sql_comments" value="true" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="use_sql_comments" value="false" />
 			
 		</properties>
     </persistence-unit>
@@ -39,11 +41,13 @@
 			<property name="hibernate.connection.password" value="Caronte1212#" />
 <!--             <property name="hibernate.hbm2ddl.auto" value="create" /> -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.order_inserts" value="true"/>
+			<property name="hibernate.order_updates" value="true"/>
  
             <!--Configuracoes de Debug-->
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
-			<property name="use_sql_comments" value="true" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="use_sql_comments" value="false" />
 			
 		</properties>
     </persistence-unit>

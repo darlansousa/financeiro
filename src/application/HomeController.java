@@ -26,11 +26,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Gasto;
 import model.Grupo;
 import model.InvestimentoFixo;
 import model.InvestimentoVariavel;
+import model.Lancamento;
 import model.Objetivo;
 import model.Orcamento;
+import model.Rendimento;
 import service.GrupoService;
 import service.InvestimentoFixoService;
 import service.InvestimentoVariavelService;
@@ -58,12 +61,16 @@ public class HomeController implements Initializable {
 	private OrcamentoService orcamentoService;
 	private List<Orcamento> orcamentos;
 	private ObservableList<Orcamento> observableListOrcamentos;
+	
+	private List<Gasto> gastos;
+	private List<Lancamento> lancamentos;
+	private List<Rendimento> rendimentos;
 
 	private Orcamento selectedOrcamento;
 
 	private Double despesas;
 	private Double receitas;
-	private Double lancamentos;
+	private Double totalLancamentos;
 	private Double patrimonio;
 	private Double lucros;
 	private Double totalInvestido;
@@ -152,26 +159,17 @@ public class HomeController implements Initializable {
 	public HomeController() {
 		super();
 		this.orcamentoService = new OrcamentoService();
-
-		this.orcamentos = this.orcamentoService.getAll().stream()
+		this.orcamentos = this.orcamentoService.getAll(false).stream()
 				.sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId())).collect(Collectors.toList());
-
 		this.grupoService = new GrupoService();
-		this.grupos = this.grupoService.getAll();
-
 		this.investimentoVariavelService = new InvestimentoVariavelService();
 		this.investimentoFixoService = new InvestimentoFixoService();
-		this.investimentosFixos = this.investimentoFixoService.getAll();
-		this.investimentosVariaveis = this.investimentoVariavelService.getAll();
-
 		this.objetivoService = new ObjetivoService();
-		this.objetivos = this.objetivoService.getAll();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadOrcamentos();
-		loadTotaisInvestimentos();
 
 		this.clnGrupo.setCellValueFactory(new PropertyValueFactory<DespesaItem, String>("grupo"));
 		this.clnPlanejado.setCellValueFactory(new PropertyValueFactory<DespesaItem, Double>("planejado"));
@@ -188,11 +186,6 @@ public class HomeController implements Initializable {
 
 		this.clnVlInvestido.setCellFactory(column -> this.formatColumnCurrencyBalanco(column));
 		this.clnReequilibrar.setCellFactory(column -> this.formatColumnCurrencyBalanco(column));
-
-		loadTableDespesas();
-		loadCarteira();
-		loadTableBalanco();
-		loadTotaisObjetivos();
 	}
 
 	@FXML
@@ -202,7 +195,7 @@ public class HomeController implements Initializable {
 
 	@FXML
 	void atualizarAll(ActionEvent event) {
-		this.orcamentos = this.orcamentoService.getAll().stream()
+		this.orcamentos = this.orcamentoService.getAll(true).stream()
 				.sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId())).collect(Collectors.toList());
 		this.grupos = this.grupoService.getAll();
 		this.investimentosFixos = this.investimentoFixoService.getAll();
@@ -246,7 +239,7 @@ public class HomeController implements Initializable {
 	}
 
 	private void loadTotalDespesas() {
-		Double gastos = this.selectedOrcamento.getGastos().stream()
+		Double gastos = this.gastos.stream()
 				.filter(g -> g.getStatus().equals("BAIXADO"))
 				.map(g -> g.getValor())
 				.reduce((v1, v2) -> v1 + v2).orElse(new Double(0));
@@ -260,16 +253,16 @@ public class HomeController implements Initializable {
 	}
 	
 	private void loadLancamentos() {
-		Double lancamentos = this.selectedOrcamento.getLancamentos()
+		Double lancamentos = this.lancamentos
 				.stream()
 				.map(l -> l.getValor())
 				.reduce((v1, v2) -> v1 + v2).orElse(new Double(0));
-		this.lancamentos = lancamentos;
-		this.lblTotalLancamentos.setText(Uteis.convertToCurrency(this.lancamentos));
+		this.totalLancamentos = lancamentos;
+		this.lblTotalLancamentos.setText(Uteis.convertToCurrency(this.totalLancamentos));
 	}
 
 	private void loadTotalReceitas() {
-		this.receitas = this.selectedOrcamento.getRendimentos().stream().filter(r -> r.getRecebido().equals("S"))
+		this.receitas = this.rendimentos.stream().filter(r -> r.getRecebido().equals("S"))
 				.map(r -> r.getValor()).reduce((v1, v2) -> v1 + v2).orElse(new Double(0));
 
 		this.lblTotalReceitas.setText(Uteis.convertToCurrency(this.receitas));
@@ -289,12 +282,15 @@ public class HomeController implements Initializable {
 
 	private void loadTotalGastosCartao() {
 		this.lblComprasCartao.setText(
-				Uteis.convertToCurrency(this.selectedOrcamento.getGastos().stream().filter(g -> g.getCartao() != null)
+				Uteis.convertToCurrency(this.gastos.stream().filter(g -> g.getCartao() != null)
 						.filter(g -> !g.getCartao().equals("")).filter(g -> g.getStatus().equals("BAIXADO"))
 						.map(g -> g.getValor()).reduce((v1, v2) -> v1 + v2).orElse(new Double(0))));
 	}
 
 	private void loadTableDespesas() {
+		if(this.grupos == null)
+			return;
+		
 		List<DespesaItem> despesas = this.grupos.stream().filter(g -> g.getTipo().equals("FINANCEIRO"))
 				.filter(g -> !g.getPercentual().equals(0.0))
 				.map(g -> new DespesaItem(
@@ -312,7 +308,7 @@ public class HomeController implements Initializable {
 			return;
 
 		XYChart.Series<String, Double> dados = new XYChart.Series<String, Double>();
-		this.selectedOrcamento.getGastos()
+		this.gastos
 		.stream()
 		.filter(g -> g.getStatus().equals("BAIXADO"))
 		.map(g -> g.getCategoria())
@@ -337,6 +333,9 @@ public class HomeController implements Initializable {
 	// INVESTIMENTOS
 
 	private void loadTotaisInvestimentos() {
+		
+		if(this.investimentosFixos == null || this.investimentosVariaveis == null)
+			return;
 
 		Double fixos = this.investimentosFixos.stream().filter(ivf -> ivf.getResgatado().equals("N"))
 				.map(ivf -> ivf.getValorLiquido()).reduce((v1, v2) -> v1 + v2).orElse(new Double(0));
@@ -359,6 +358,9 @@ public class HomeController implements Initializable {
 	}
 
 	private void loadCarteira() {
+		if(this.investimentosFixos == null || this.investimentosVariaveis == null)
+			return;
+		
 		List<PieChart.Data> dados = new ArrayList<PieChart.Data>();
 		dados.addAll(this.investimentosFixos.stream().filter(ivf -> ivf.getResgatado().equals("N"))
 				.map(ivf -> ivf.getGrupo()).distinct()
@@ -391,6 +393,9 @@ public class HomeController implements Initializable {
 	}
 
 	private void loadTableBalanco() {
+		if(this.grupos == null)
+			return;
+		
 		List<BalancoItem> dados = new ArrayList<BalancoItem>();
 
 		dados.addAll(this.grupos.stream().filter(g -> g.getTipo().equals("INVESTIMENTO"))
@@ -405,10 +410,11 @@ public class HomeController implements Initializable {
 	// OBJETIVOS
 
 	private void loadTotaisObjetivos() {
+		if(this.objetivos == null)
+			return;
+		
 		Long totalObjetivos = this.objetivos.stream().count();
-
 		Long objetivosRealizados = this.objetivos.stream().filter(o -> o.getPercentualAtingido().equals(1.0)).count();
-
 		Long objetivosPendentes = this.objetivos.stream().filter(o -> !o.getPercentualAtingido().equals(1.0)).count();
 
 		this.lblTotalObjetivos.setText(totalObjetivos.toString());
@@ -504,6 +510,9 @@ public class HomeController implements Initializable {
 	public void setSelectedOrcamento(Orcamento selectedOrcamento) {
 		if (selectedOrcamento != null) {
 			this.selectedOrcamento = selectedOrcamento;
+			this.gastos = selectedOrcamento.getGastos();
+			this.lancamentos = selectedOrcamento.getLancamentos();
+			this.rendimentos = selectedOrcamento.getRendimentos();
 			loadTotalGastosCartao();
 			loadTotalDespesas();
 			loadTotalReceitas();
