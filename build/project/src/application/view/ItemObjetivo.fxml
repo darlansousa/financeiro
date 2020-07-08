@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ItemObjetivoController">
+   <top>
+      <AnchorPane id="paleta" prefHeight="89.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnNovo" layoutX="30.0" layoutY="50.0" mnemonicParsing="false" onAction="#novo" text="Novo" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="50.0" />
+            <Button fx:id="btnRemover" disable="true" layoutX="94.0" layoutY="50.0" mnemonicParsing="false" onAction="#remover" text="Remover" />
+            <Label fx:id="lblObjetivoTitle" layoutX="22.0" layoutY="9.0" text="Planejamento" textFill="#ff9900" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <TableView fx:id="tblItens" prefHeight="187.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="clnDescricao" prefWidth="332.0" text="Descrição" />
+            <TableColumn fx:id="clnValor" prefWidth="167.0" text="Valor" />
+        </columns>
+      </TableView>
+   </bottom>
+   <center>
+      <AnchorPane id="paleta" prefHeight="110.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="txtDescricao" disable="true" layoutX="100.0" layoutY="12.0" prefHeight="26.0" prefWidth="380.0" AnchorPane.leftAnchor="100.0" />
+            <TextField fx:id="txtValor" disable="true" layoutX="100.0" layoutY="49.0" prefHeight="26.0" prefWidth="120.0" />
+            <Label layoutX="20.0" layoutY="17.0" text="Item" textFill="#646464" AnchorPane.leftAnchor="20.0" />
+            <Label layoutX="20.0" layoutY="54.0" text="Valor R$" textFill="#646464" AnchorPane.leftAnchor="20.0" />
+            <Button fx:id="btnSalvar" disable="true" layoutX="535.0" layoutY="188.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" textFill="#02aaff" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="108.0" />
+            <Button fx:id="btnCancelar" disable="true" layoutX="621.0" layoutY="188.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" textFill="#02aaff" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
