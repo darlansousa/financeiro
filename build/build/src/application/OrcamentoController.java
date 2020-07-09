@@ -37,7 +37,7 @@ public class OrcamentoController implements Initializable {
 	public OrcamentoController() {
 		super();
 		this.service = new OrcamentoService();
-		this.orcamentos = service.getAll();
+		this.orcamentos = service.getAll(false);
 	}
 
 	@FXML
@@ -106,7 +106,7 @@ public class OrcamentoController implements Initializable {
 				alertRemove.setTitle("Sucesso");
 				alertRemove.setContentText(resp.getMessage());
 				alertRemove.showAndWait();
-				this.orcamentos = service.getAll();
+				this.orcamentos = service.getAll(false);
 				this.loadOrcamentos();
 				resetForm();
 			} else {
@@ -162,7 +162,7 @@ public class OrcamentoController implements Initializable {
 			Response resp = this.service.removeById(new Integer(this.txtId.getText()));
 
 			if (resp.getSuccess()) {
-				this.orcamentos = service.getAll();
+				this.orcamentos = service.getAll(false);
 				this.loadOrcamentos();
 				resetForm();
 			} else {
@@ -191,7 +191,7 @@ public class OrcamentoController implements Initializable {
 		}
 
 		if (resp.getSuccess()) {
-			this.orcamentos = service.getAll();
+			this.orcamentos = service.getAll(false);
 			this.loadOrcamentos();
 			resetForm();
 		} else {

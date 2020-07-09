@@ -127,13 +127,9 @@ public class Orcamento implements Serializable {
 
 	@Transient
 	public Long getDias() {
-
 		LocalDate fim = this.getDataFinal().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
 		LocalDate ini = this.getDataInicial().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
 		Long dias = (Long) ChronoUnit.DAYS.between(ini, fim);
-
 		if (dias < 0)
 			return new Long(0);
 

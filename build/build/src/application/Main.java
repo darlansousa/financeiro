@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -15,7 +16,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root, 800, 600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
-			Image imagem = new Image("file:images/logo.png");
+			Image imagem = new Image("file:src/images/logo.png");
 			primaryStage.getIcons().add(imagem);
 			primaryStage.setTitle("Financeiro");
 			primaryStage.setMaximized(true);

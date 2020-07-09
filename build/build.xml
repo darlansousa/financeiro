@@ -5,6 +5,7 @@
 			<filelist>
 				<file name="${java.home}\..\lib\ant-javafx.jar"/>
 				<file name="${java.home}\lib\jfxrt.jar"/>
+				<file name="${basedir}"/>
 			</filelist>
 		</path>
 	
@@ -20,95 +21,100 @@
 		<mkdir dir="externalLibs" />
 	
 		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="ejb3-persistence.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="jboss-archive-browsing.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="commons-collections-2.1.1.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="hibernate-validator.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="hibernate3.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos">
-				<filename name="mysql-connector-java-8.0.20.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="hibernate-commons-annotations.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="dom4j-1.6.1.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="cglib-nodep-2.1_3.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="jta.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="c3p0-0.9.1.2.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="hibernate-entitymanager.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="commons-logging-1.0.4.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="hibernate-annotations.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
-				<filename name="antlr-2.7.6.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate5/required">
+			<fileset dir="C:\Users\darlan\Documents\libs">
 				<filename name="javassist-3.22.0-GA.jar"/>
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
-			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="c3p0-0.9.1.2.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="ejb3-persistence.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="commons-collections-2.1.1.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
 				<filename name="log4j-1.2.11.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="commons-logging-1.0.4.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="mysql-connector-java-8.0.20.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="antlr-2.7.6.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="hibernate-annotations.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="cglib-nodep-2.1_3.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="jta.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="jboss-archive-browsing.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="hibernate-entitymanager.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="hibernate3.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="dom4j-1.6.1.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="hibernate-validator.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\darlan\Documents\libs">
+				<filename name="hibernate-commons-annotations.jar"/>
 			</fileset>
 		</copy>
 	
 		<mkdir dir="project" />
 		<copy todir="project">
-			<fileset dir="/home/darlan/eclipse-workspace/financeiro">
+			<fileset dir="C:\Users\darlan\eclipse-workspace\financeiro">
 				<include name="src/**" />
+			</fileset>
+		</copy>
+		<copy todir="project">
+			<fileset dir="C:\Users\darlan\eclipse-workspace\financeiro">
+				<include name="resources/**" />
 			</fileset>
 		</copy>
 	
@@ -136,9 +142,9 @@
 				<include name="dom4j-1.6.1.jar"/>
 				<include name="jboss-archive-browsing.jar"/>
 				<include name="log4j-1.2.11.jar"/>
-				<include name="mysql-connector-java-8.0.20.jar"/>
 				<include name="javassist-3.22.0-GA.jar"/>
 				<include name="hibernate3.jar"/>
+				<include name="mysql-connector-java-8.0.20.jar"/>
 				<include name="commons-logging-1.0.4.jar"/>
 			</fileset>
 		</copy>
@@ -148,6 +154,11 @@
 		<!-- Copy project sources itself -->
 		<copy todir="build/src">
 			<fileset dir="project/src">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		<copy todir="build/src">
+			<fileset dir="project/resources">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
@@ -163,6 +174,9 @@
 		<!-- Copy over none Java-Files -->
 		<copy todir="build/classes">
 		<fileset dir="project/src">
+			<exclude name="**/*.java"/>
+		</fileset>
+		<fileset dir="project/resources">
 			<exclude name="**/*.java"/>
 		</fileset>
 		</copy>
@@ -186,12 +200,14 @@
 		<fx:resources id="appRes">
 			<fx:fileset dir="dist" includes="financeiro.jar"/>
 			<fx:fileset dir="dist" includes="libs/*"/>
+			<fx:fileset dir="dist" includes="resources/**"/>
 		</fx:resources>
 	
 		<fx:application id="fxApplication"
 			name="Financeiro"
 			mainClass="application.Main"
 			toolkit="fx"
+			version="1.0"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />
@@ -221,7 +237,7 @@
 			includeDT="false"
 			offlineAllowed="true"
 			outdir="${basedir}/deploy"
-			outfile="financeiro" nativeBundles="msi"
+			outfile="financeiro" nativeBundles="exe"
 			updatemode="background" >
 	
 			<fx:platform basedir="${java.home}"/>

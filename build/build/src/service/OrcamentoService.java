@@ -25,8 +25,8 @@ public class OrcamentoService {
 		this.gastoService = new GastoService();
 	}
 
-	public List<Orcamento> getAll() {
-		return this.repo.getAll();
+	public List<Orcamento> getAll(Boolean clearCash) {
+		return this.repo.getAll(clearCash);
 	}
 
 	public Response save(String descricao, Date ini, Date fim) {
@@ -146,7 +146,7 @@ public class OrcamentoService {
 
 		try {
 			Calendar cal = Calendar.getInstance();
-			Orcamento lastOrcamento = this.getAll().stream().sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId()))
+			Orcamento lastOrcamento = this.getAll(false).stream().sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId()))
 					.collect(Collectors.toList()).get(1);
 
 			if (lastOrcamento.getLancamentos() != null && !lastOrcamento.getLancamentos().isEmpty())

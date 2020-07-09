@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="painel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1350.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HomeController">
+<BorderPane id="painel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1350.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8.0.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HomeController">
     <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -69,7 +69,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblTotalLancamentos" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblTotalLancamentos" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane id="card" layoutX="451.0" layoutY="60.0" prefHeight="81.0" prefWidth="193.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0">
@@ -79,7 +79,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblTotalReceitas" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblTotalReceitas" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane id="card" layoutX="334.0" layoutY="422.0" prefHeight="81.0" prefWidth="193.0" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="60.0">
@@ -89,7 +89,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblTotalDespesas" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblTotalDespesas" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane id="card" layoutX="1068.0" layoutY="60.0" prefHeight="81.0" prefWidth="193.0" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="60.0">
@@ -99,7 +99,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblDiferenca" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblDiferenca" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane id="card" prefHeight="81.0" prefWidth="193.0" AnchorPane.leftAnchor="860.0" AnchorPane.topAnchor="60.0">
@@ -109,7 +109,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblGastoMedioDiario" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblGastoMedioDiario" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane id="card" layoutX="778.0" layoutY="20.0" prefHeight="81.0" prefWidth="193.0" AnchorPane.leftAnchor="1070.0" AnchorPane.topAnchor="60.0">
@@ -119,7 +119,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblComprasCartao" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblComprasCartao" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                         <BarChart id="card" fx:id="chartCategoria" layoutX="650.0" layoutY="160.0" legendVisible="false" maxHeight="370.0" maxWidth="614.0" prefHeight="370.0" prefWidth="614.0" title="Gastos por categoria" AnchorPane.leftAnchor="650.0" AnchorPane.topAnchor="160.0">
@@ -156,7 +156,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblPatrimonio" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblPatrimonio" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane id="card" layoutX="14.0" layoutY="29.0" prefHeight="81.0" prefWidth="193.0" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="60.0">
@@ -166,7 +166,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblTotalRendimentos" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblTotalRendimentos" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                         <PieChart id="card" fx:id="chartCarteira" layoutX="20.0" layoutY="161.0" prefHeight="253.0" prefWidth="610.0" title="Carteira" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="160.0" />
@@ -187,7 +187,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label id="card-currency" fx:id="lblTotalInvestido" layoutX="14.0" layoutY="54.0" text="R$ 13.500,89" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
+                              <Label id="card-currency" fx:id="lblTotalInvestido" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
                      </children>

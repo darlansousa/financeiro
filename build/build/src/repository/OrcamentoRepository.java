@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.QueryHint;
 
 import model.Orcamento;
 
 public class OrcamentoRepository extends Repository{
 	
 	@SuppressWarnings("unchecked")
-	public List<Orcamento> getAll(){
+	public List<Orcamento> getAll(Boolean clearCash){
+		if(clearCash)
+			this.em.clear();
+		
 		List<Orcamento> orcamentos =  new ArrayList<>();
-		this.em.clear();
 		this.em.getTransaction().begin();
 		Query query = this.em.createQuery("SELECT o from Orcamento o");
 		orcamentos.addAll(query.getResultList());

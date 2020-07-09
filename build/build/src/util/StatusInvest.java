@@ -10,8 +10,13 @@ public class StatusInvest {
 	
 	public static void update() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
-	
-		processBuilder.command("src/services/"+	Config.get("ambiente")+"/statusInvest");
+		
+		if(Config.get("so").equals("windows")) {
+			processBuilder.command("resources/services/"+	Config.get("ambiente")+"/statusInvest.exe");
+		}else {
+			processBuilder.command("src/services/"+	Config.get("ambiente")+"/statusInvest");
+		}
+		
 
 		try {
 
