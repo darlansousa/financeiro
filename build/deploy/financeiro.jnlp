@@ -8,24 +8,25 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="financeiro.jar" size="12462570" download="eager" />
-    <jar href="libs\antlr-2.7.6.jar" size="443432" download="eager" />
-    <jar href="libs\c3p0-0.9.1.2.jar" size="610790" download="eager" />
-    <jar href="libs\cglib-nodep-2.1_3.jar" size="324238" download="eager" />
-    <jar href="libs\commons-collections-2.1.1.jar" size="175426" download="eager" />
-    <jar href="libs\commons-logging-1.0.4.jar" size="38015" download="eager" />
-    <jar href="libs\dom4j-1.6.1.jar" size="313898" download="eager" />
-    <jar href="libs\ejb3-persistence.jar" size="50574" download="eager" />
-    <jar href="libs\hibernate-annotations.jar" size="265130" download="eager" />
-    <jar href="libs\hibernate-commons-annotations.jar" size="66426" download="eager" />
-    <jar href="libs\hibernate-entitymanager.jar" size="116544" download="eager" />
-    <jar href="libs\hibernate-validator.jar" size="60992" download="eager" />
-    <jar href="libs\hibernate3.jar" size="2255753" download="eager" />
-    <jar href="libs\javassist-3.22.0-GA.jar" size="739582" download="eager" />
-    <jar href="libs\jboss-archive-browsing.jar" size="413698" download="eager" />
-    <jar href="libs\jta.jar" size="8812" download="eager" />
-    <jar href="libs\log4j-1.2.11.jar" size="350627" download="eager" />
-    <jar href="libs\mysql-connector-java-8.0.20.jar" size="2385601" download="eager" />
+    <jar href="financeiro.jar" size="11138394" download="eager" />
+    <jar href="libs/antlr-2.7.6.jar" size="443432" download="eager" />
+    <jar href="libs/c3p0-0.9.1.2.jar" size="610790" download="eager" />
+    <jar href="libs/cglib-nodep-2.1_3.jar" size="324238" download="eager" />
+    <jar href="libs/commons-collections-2.1.1.jar" size="175426" download="eager" />
+    <jar href="libs/commons-logging-1.0.4.jar" size="38015" download="eager" />
+    <jar href="libs/dom4j-1.6.1.jar" size="313898" download="eager" />
+    <jar href="libs/ejb3-persistence.jar" size="50574" download="eager" />
+    <jar href="libs/hibernate-annotations.jar" size="265130" download="eager" />
+    <jar href="libs/hibernate-commons-annotations.jar" size="66426" download="eager" />
+    <jar href="libs/hibernate-entitymanager.jar" size="116544" download="eager" />
+    <jar href="libs/hibernate-validator.jar" size="60992" download="eager" />
+    <jar href="libs/hibernate3.jar" size="2255753" download="eager" />
+    <jar href="libs/javassist-3.22.0-GA.jar" size="739582" download="eager" />
+    <jar href="libs/jboss-archive-browsing.jar" size="413698" download="eager" />
+    <jar href="libs/jta.jar" size="8812" download="eager" />
+    <jar href="libs/log4j-1.2.11.jar" size="350627" download="eager" />
+    <jar href="libs/mysql-connector-java-8.0.20.jar" size="2385601" download="eager" />
+    <jar href="libs/sqlite-jdbc-3.30.1.jar" size="6096861" download="eager" />
   </resources>
   <jfx:javafx-desc  width="0" height="0" main-class="application.Main"  name="Financeiro" />
   <update check="background"/>

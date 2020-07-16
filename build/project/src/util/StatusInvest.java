@@ -7,16 +7,16 @@ import java.io.InputStreamReader;
 import config.Config;
 
 public class StatusInvest {
-	
-	public static void update() {
+
+	public static String update() {
+		String result = "";
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		
-		if(Config.get("so").equals("windows")) {
-			processBuilder.command("resources/services/"+	Config.get("ambiente")+"/statusInvest.exe");
-		}else {
-			processBuilder.command("src/services/"+	Config.get("ambiente")+"/statusInvest");
+
+		if (Config.get("so").equals("windows")) {
+			processBuilder.command("resources/services/" + Config.get("ambiente") + "/statusInvest.exe");
+		} else {
+			processBuilder.command("resources/services/" + Config.get("ambiente") + "/statusInvest");
 		}
-		
 
 		try {
 
@@ -35,17 +35,17 @@ public class StatusInvest {
 			if (exitVal == 0) {
 				System.out.println("Success!");
 				System.out.println(output);
-				//TODO: Atualizar tela inicial com valores dos investimentos
-			} else {
-				// abnormal...
+				result = output.toString();
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			result = e.getMessage();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			result = e.getMessage();
 		}
-    	
+
+		return result;
+
 	}
 
 }

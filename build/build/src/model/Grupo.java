@@ -27,6 +27,7 @@ public class Grupo implements Serializable {
 	// ID, DESCRICAO, PERCENTUAL, TIPO, COR
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Integer id;
 	@Column(name = "DESCRICAO")
 	private String descricao;

@@ -22,5 +22,13 @@ public class Uteis {
 		}
 		return color;
 	}
+	
+public static String convertToPercent(Double valor) {
+		
+		
+		
+		return valor.intValue()+"%";
+	}
+	
 
 }

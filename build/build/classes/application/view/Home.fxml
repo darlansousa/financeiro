@@ -17,14 +17,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="painel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1350.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/8.0.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HomeController">
+<BorderPane id="painel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1350.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HomeController">
     <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Arquivo">
             <items>
-              <MenuItem mnemonicParsing="false" text="Exportar" />
-                  <MenuItem mnemonicParsing="false" text="Importar" />
+              <MenuItem mnemonicParsing="false" onAction="#abrir" text="Abrir..." />
+                  <MenuItem mnemonicParsing="false" onAction="#salvar" text="Salvar..." />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Cadastro">
@@ -50,6 +50,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#atualizarInvestimentos" text="Atualizar Investimentos" />
                   <MenuItem mnemonicParsing="false" onAction="#atualizarObjetivo" text="Atualizar Objetivos" />
                </items></Menu>
+            <Menu mnemonicParsing="false" text="Ajuda">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#sobre" text="Sobre" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
@@ -58,7 +63,7 @@
         <tabs>
           <Tab text="Orçamentos">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="603.0" prefWidth="1350.0">
                      <children>
                         <Label id="card-header" text="Orçamento financeiro" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
                         <ComboBox fx:id="comboOrcamento" layoutX="181.0" layoutY="14.0" prefHeight="25.0" prefWidth="268.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="14.0" />
@@ -122,9 +127,9 @@
                               <Label id="card-currency" fx:id="lblComprasCartao" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
-                        <BarChart id="card" fx:id="chartCategoria" layoutX="650.0" layoutY="160.0" legendVisible="false" maxHeight="370.0" maxWidth="614.0" prefHeight="370.0" prefWidth="614.0" title="Gastos por categoria" AnchorPane.leftAnchor="650.0" AnchorPane.topAnchor="160.0">
+                        <BarChart id="card" fx:id="chartCategoria" layoutX="650.0" layoutY="160.0" legendVisible="false" maxHeight="464.0" maxWidth="614.0" prefHeight="464.0" prefWidth="614.0" title="Gastos por categoria" AnchorPane.leftAnchor="650.0" AnchorPane.topAnchor="160.0">
                           <xAxis>
-                            <CategoryAxis label="Categorias" side="BOTTOM" fx:id="x" />
+                            <CategoryAxis label="Categorias" side="BOTTOM" tickLabelRotation="48.4" fx:id="x" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis fx:id="y" label="Valor" side="LEFT" />
@@ -136,6 +141,15 @@
                             <TableColumn fx:id="clnPlanejado" minWidth="0.0" prefWidth="118.0" text="Planejado" />
                               <TableColumn fx:id="clnReal" prefWidth="110.0" text="Real" />
                               <TableColumn fx:id="clnDiferenca" prefWidth="149.99996948242188" text="Diferença" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TableView id="card" fx:id="tblCartao" layoutX="20.0" layoutY="405.0" prefHeight="220.0" prefWidth="612.0" AnchorPane.leftAnchor="20.0">
+                          <columns>
+                            <TableColumn fx:id="clnCartao" prefWidth="418.0" text="Cartao" />
+                            <TableColumn fx:id="clnGastoCartao" minWidth="0.0" prefWidth="192.0" text="Total gasto" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -190,6 +204,12 @@
                               <Label id="card-currency" fx:id="lblTotalInvestido" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
+                        <TableView id="card" fx:id="tblInvestimentosPlan" layoutX="656.0" layoutY="60.0" prefHeight="541.0" prefWidth="564.0" AnchorPane.leftAnchor="650.0" AnchorPane.topAnchor="60.0">
+                          <columns>
+                            <TableColumn fx:id="clnInvPlan" prefWidth="335.0" text="Investimento" />
+                            <TableColumn fx:id="clnPercentualPlan" minWidth="0.0" prefWidth="227.0" text="Percentual Planejado" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
               </content>
