@@ -1,54 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
-             version="2.1">
-    <persistence-unit name="dev" transaction-type="RESOURCE_LOCAL">  
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>  
-        <properties>
-       		<property name="hibernate.archive.autodetection" value="class" />
-       		 
-            <!-- Conexão com o banco de dados -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost/financeiro" />
+	version="2.1">
+	<persistence-unit name="devmysql"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<property name="hibernate.archive.autodetection"
+				value="class" />
+
+			<!-- Conexão com o banco de dados -->
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.connection.driver_class"
+				value="com.mysql.cj.jdbc.Driver" />
+			<property name="hibernate.connection.url"
+				value="jdbc:mysql://localhost/financeiro" />
 			<property name="hibernate.connection.user" value="root" />
-			<property name="hibernate.connection.password" value="Caronte1212#" />
-<!--             <property name="hibernate.hbm2ddl.auto" value="create" /> -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.order_inserts" value="true"/>
-			<property name="hibernate.order_updates" value="true"/>
- 
-            <!--Configuracoes de Debug-->
+			<property name="hibernate.connection.password"
+				value="Caronte1212#" />
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.order_inserts" value="true" />
+			<property name="hibernate.order_updates" value="true" />
+
+			<!--Configuracoes de Debug -->
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
 			<property name="use_sql_comments" value="false" />
-			
+
 		</properties>
-    </persistence-unit>
-    
-      <persistence-unit name="prd" transaction-type="RESOURCE_LOCAL">  
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>  
-        <properties>
-       		<property name="hibernate.archive.autodetection" value="class" />
-       		 
-            <!-- Conexão com o banco de dados -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://35.198.50.67/financeiro" />
+	</persistence-unit>
+
+	<persistence-unit name="prdmysql"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<property name="hibernate.archive.autodetection"
+				value="class" />
+
+			<!-- Conexão com o banco de dados -->
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.connection.driver_class"
+				value="com.mysql.cj.jdbc.Driver" />
+			<property name="hibernate.connection.url"
+				value="jdbc:mysql://35.198.50.67/financeiro" />
 			<property name="hibernate.connection.user" value="root" />
-			<property name="hibernate.connection.password" value="Caronte1212#" />
-<!--             <property name="hibernate.hbm2ddl.auto" value="create" /> -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.order_inserts" value="true"/>
-			<property name="hibernate.order_updates" value="true"/>
- 
-            <!--Configuracoes de Debug-->
+			<property name="hibernate.connection.password"
+				value="Caronte1212#" />
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.order_inserts" value="true" />
+			<property name="hibernate.order_updates" value="true" />
+
+			<!--Configuracoes de Debug -->
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
 			<property name="use_sql_comments" value="false" />
-			
+
 		</properties>
-    </persistence-unit>
+	</persistence-unit>
+
+	<persistence-unit name="prd">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<property name="hibernate.connection.username"
+				value="fonini" />
+			<property name="hibernate.connection.driver_class"
+				value="org.sqlite.JDBC" />
+			<property name="hibernate.connection.password" value="teste" />
+			<property name="hibernate.connection.url"
+				value="jdbc:sqlite:resources/financeiro.db" />
+			<property name="hibernate.cache.provider_class"
+				value="org.hibernate.cache.NoCacheProvider" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.dialect"
+				value="util.SQLiteDialect" />
+		</properties>
+	</persistence-unit>
+		<persistence-unit name="dev">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<property name="hibernate.connection.username"
+				value="fonini" />
+			<property name="hibernate.connection.driver_class"
+				value="org.sqlite.JDBC" />
+			<property name="hibernate.connection.password" value="teste" />
+			<property name="hibernate.connection.url"
+				value="jdbc:sqlite:resources/financeirodev.db" />
+			<property name="hibernate.cache.provider_class"
+				value="org.hibernate.cache.NoCacheProvider" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.dialect"
+				value="util.SQLiteDialect" />
+		</properties>
+	</persistence-unit>
 </persistence>

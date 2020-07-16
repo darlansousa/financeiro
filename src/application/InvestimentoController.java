@@ -376,7 +376,6 @@ public class InvestimentoController implements Initializable {
 
 		} else {
 			this.investimentosFixos = this.investimentoFixoService.getAll().stream()
-					.filter(ivf -> ivf.getResgatado().equals("N"))
 					.filter(iv -> iv.getGrupo().getDescricao().equals(this.selectedGroup.getDescricao()))
 					.collect(Collectors.toList());
 

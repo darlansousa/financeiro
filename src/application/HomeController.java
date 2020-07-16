@@ -1,11 +1,17 @@
 package application;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import config.Config;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,13 +24,21 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import model.Gasto;
 import model.Grupo;
@@ -41,8 +55,10 @@ import service.ObjetivoService;
 import service.OrcamentoService;
 import util.BalancoItem;
 import util.DespesaItem;
+import util.InvestimentoPlan;
 import util.Uteis;
 import util.StatusInvest;
+import util.TipoCartao;
 
 public class HomeController implements Initializable {
 
@@ -123,14 +139,23 @@ public class HomeController implements Initializable {
 	@FXML
 	private TableColumn<BalancoItem, Double> clnReequilibrar;
 
-	@FXML
-	private BarChart<String, Double> chartCategoria;
+    @FXML
+    private BarChart<String, Double> chartCategoria;
 
-	@FXML
-	private CategoryAxis x;
+    @FXML
+    private CategoryAxis x;
 
-	@FXML
-	private NumberAxis y;
+    @FXML
+    private NumberAxis y;
+	
+    @FXML
+    private TableView<TipoCartao> tblCartao;
+
+    @FXML
+    private TableColumn<TipoCartao, String> clnCartao;
+
+    @FXML
+    private TableColumn<TipoCartao, Double> clnGastoCartao;
 
 	@FXML
 	private ComboBox<Orcamento> comboOrcamento;
@@ -155,6 +180,15 @@ public class HomeController implements Initializable {
 
 	@FXML
 	private Label lblTotalObjetivos;
+	
+    @FXML
+    private TableView<InvestimentoPlan> tblInvestimentosPlan;
+
+    @FXML
+    private TableColumn<InvestimentoPlan, String> clnInvPlan;
+
+    @FXML
+    private TableColumn<InvestimentoPlan, Double> clnPercentualPlan;
 
 	public HomeController() {
 		super();
@@ -169,13 +203,28 @@ public class HomeController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.orcamentos = this.orcamentoService.getAll(true).stream()
+				.sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId())).collect(Collectors.toList());
+		this.grupos = this.grupoService.getAll();
+		this.investimentosFixos = this.investimentoFixoService.getAll();
+		this.investimentosVariaveis = this.investimentoVariavelService.getAll();
+		this.objetivos = this.objetivoService.getAll();
 		loadOrcamentos();
+		loadTotaisInvestimentos();
+		loadCarteira();
+		loadTableBalanco();
+		loadTablePercentualInv();
+		loadTotaisObjetivos();
 
 		this.clnGrupo.setCellValueFactory(new PropertyValueFactory<DespesaItem, String>("grupo"));
 		this.clnPlanejado.setCellValueFactory(new PropertyValueFactory<DespesaItem, Double>("planejado"));
 		this.clnReal.setCellValueFactory(new PropertyValueFactory<DespesaItem, Double>("real"));
 		this.clnDiferenca.setCellValueFactory(new PropertyValueFactory<DespesaItem, Double>("diferenca"));
-
+		
+		this.clnCartao.setCellValueFactory(new PropertyValueFactory<TipoCartao, String>("cartao"));
+		this.clnGastoCartao.setCellValueFactory(new PropertyValueFactory<TipoCartao, Double>("valorTotal"));
+		this.clnGastoCartao.setCellFactory(column -> this.formatColumnCurrencyCartao(column));
+		
 		this.clnPlanejado.setCellFactory(column -> this.formatColumnCurrency(column));
 		this.clnReal.setCellFactory(column -> this.formatColumnCurrency(column));
 		this.clnDiferenca.setCellFactory(column -> this.formatColumnCurrency(column));
@@ -183,14 +232,47 @@ public class HomeController implements Initializable {
 		this.clnGrupoInv.setCellValueFactory(new PropertyValueFactory<BalancoItem, String>("grupo"));
 		this.clnVlInvestido.setCellValueFactory(new PropertyValueFactory<BalancoItem, Double>("investido"));
 		this.clnReequilibrar.setCellValueFactory(new PropertyValueFactory<BalancoItem, Double>("reequilibrar"));
+		
+		this.clnInvPlan.setCellValueFactory(new PropertyValueFactory<InvestimentoPlan, String>("investimento"));
+		this.clnPercentualPlan.setCellValueFactory(new PropertyValueFactory<InvestimentoPlan, Double>("percentual"));
+		this.clnPercentualPlan.setCellFactory(column -> this.formatColumnCurrencyPlan(column));
 
 		this.clnVlInvestido.setCellFactory(column -> this.formatColumnCurrencyBalanco(column));
 		this.clnReequilibrar.setCellFactory(column -> this.formatColumnCurrencyBalanco(column));
 	}
+	
+	
 
 	@FXML
 	void atualizar(ActionEvent event) {
-		StatusInvest.update();
+		String result = StatusInvest.update();
+		
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Api Status invest");
+		alert.setHeaderText("Buscando Valor de investimentos");
+	
+		
+
+		Label label = new Label("Console:");
+
+		TextArea textArea = new TextArea(result);
+		textArea.setEditable(false);
+		textArea.setWrapText(true);
+
+		textArea.setMaxWidth(Double.MAX_VALUE);
+		textArea.setMaxHeight(Double.MAX_VALUE);
+		GridPane.setVgrow(textArea, Priority.ALWAYS);
+		GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+		GridPane expContent = new GridPane();
+		expContent.setMaxWidth(Double.MAX_VALUE);
+		expContent.add(label, 0, 0);
+		expContent.add(textArea, 0, 1);
+
+		// Set expandable Exception into the dialog pane.
+		alert.getDialogPane().setExpandableContent(expContent);
+
+		alert.showAndWait();
 	}
 
 	@FXML
@@ -205,6 +287,7 @@ public class HomeController implements Initializable {
 		loadTotaisInvestimentos();
 		loadCarteira();
 		loadTableBalanco();
+		loadTablePercentualInv();
 		loadTotaisObjetivos();
 
 	}
@@ -214,6 +297,7 @@ public class HomeController implements Initializable {
 		loadTotaisInvestimentos();
 		loadCarteira();
 		loadTableBalanco();
+		loadTablePercentualInv();
     }
 
     @FXML
@@ -302,6 +386,29 @@ public class HomeController implements Initializable {
 		ObservableList<DespesaItem> observableListDespesas = FXCollections.observableArrayList(despesas);
 		this.tblGastos.setItems(observableListDespesas);
 	}
+	
+	private void loadTableCartao() {
+		if(this.grupos == null)
+			return;
+		
+		List<TipoCartao> despesasCartao = new ArrayList<TipoCartao>();
+		
+		this.gastos.stream()
+				.filter(g -> g.getCartao() != null)
+				.filter(g -> !g.getCartao().equals(""))
+				.collect(Collectors.groupingBy(
+			            g -> g.getCartao(),
+			            Collectors.summarizingDouble(g -> g.getValor()))
+						)
+				.forEach((cartao,valor) -> {
+					despesasCartao.add(new TipoCartao(cartao.toString(),valor.getSum()));
+				});
+		
+		
+
+		ObservableList<TipoCartao> observableListDespesas = FXCollections.observableArrayList(despesasCartao);
+		this.tblCartao.setItems(observableListDespesas);
+	}
 
 	private void loadGastosPorCategoria() {
 		if (this.selectedOrcamento == null)
@@ -313,7 +420,10 @@ public class HomeController implements Initializable {
 		.filter(g -> g.getStatus().equals("BAIXADO"))
 		.map(g -> g.getCategoria())
 		.distinct()
-		.map(c -> new XYChart.Data<String, Double>(c.getDescricao(), c.getTotalGastosByOrcamento(this.selectedOrcamento)))
+		.map(c -> new XYChart.Data<String, Double>(
+				c.getDescricao(),
+				c.getTotalGastosByOrcamento(this.selectedOrcamento)
+				))
 		.sorted((d1, d2) -> Double.compare(d2.getYValue(), d1.getYValue()))
 		.forEach(s -> dados.getData().add(s));
 
@@ -406,6 +516,46 @@ public class HomeController implements Initializable {
 		ObservableList<BalancoItem> obsBalancoIntem = FXCollections.observableArrayList(dados);
 		this.tblEquilibrio.setItems(obsBalancoIntem);
 	}
+	
+	private void loadTablePercentualInv() {
+		if(this.investimentosFixos == null || this.investimentosVariaveis == null)
+			return;
+		
+		List<Lancamento> lancamentos = this.objetivoService.getAllLancamentos();
+		
+		List<InvestimentoPlan> dados = new ArrayList<InvestimentoPlan>();
+		this.investimentosFixos.stream()
+		.filter(ivf -> ivf.getResgatado().equals("N"))
+		.forEach(ivf -> {
+			Double planejado = lancamentos.stream()
+			.filter(l -> l.getIdInvestimento() != null)
+			.filter(l -> l.getTipoInvestimento().equals("FIXO"))
+			.filter(l -> l.getIdInvestimento().equals(ivf.getId()))
+			.map(l -> l.getValor())
+			.reduce((la1,la2) -> la1 + la2)
+			.orElse(new Double(0));
+			dados.add(new InvestimentoPlan(ivf.getDescricao(),(planejado / ivf.getValorAplicado()) * 100));
+			
+		});
+		
+		this.investimentosVariaveis.stream()
+		.filter(ivv -> ivv.getVendido().equals("N"))
+		.forEach(ivv -> {
+			Double planejado = lancamentos.stream()
+			.filter(l -> l.getIdInvestimento() != null)
+			.filter(l -> l.getTipoInvestimento().equals("VARIAVEL"))
+			.filter(l -> l.getIdInvestimento().equals(ivv.getId()))
+			.map(l -> l.getValor())
+			.reduce((la1,la2) -> la1 + la2)
+			.orElse(new Double(0));
+			
+			dados.add(new InvestimentoPlan(ivv.getDescricao(),(planejado / ivv.getTotal() ) * 100 ));
+			
+		});
+
+		ObservableList<InvestimentoPlan> obsInvPlan = FXCollections.observableArrayList(dados);
+		this.tblInvestimentosPlan.setItems(obsInvPlan);
+	}
 
 	// OBJETIVOS
 
@@ -423,6 +573,22 @@ public class HomeController implements Initializable {
 	}
 
 	// MENU
+	
+    @FXML
+    void sobre(ActionEvent event) {
+    	try {
+			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("view/Sobre.fxml"));
+			Scene scene = new Scene(root, 668, 286);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Sobre");
+			stage.setMaximized(false);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
 	@FXML
 	void openOrcamento(ActionEvent event) {
@@ -470,7 +636,6 @@ public class HomeController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@FXML
@@ -492,6 +657,7 @@ public class HomeController implements Initializable {
 	@FXML
 	void openGastos(ActionEvent event) {
 		try {
+			
 			BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("view/Gasto.fxml"));
 			Scene scene = new Scene(root, 1200, 600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -500,10 +666,52 @@ public class HomeController implements Initializable {
 			stage.setTitle("Gastos");
 			stage.setMaximized(true);
 			stage.show();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+    @FXML
+    void abrir(ActionEvent event) throws IOException {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Abrir arquivo");
+    	Stage stage = new Stage();
+    	fileChooser.getExtensionFilters().add(new ExtensionFilter("*.db", "*.db"));
+    	File file = fileChooser.showOpenDialog(stage);
+
+    	if(file != null) {
+    		if(!Config.get("ambiente").equals("dev"))
+    			Files.copy(Paths.get(file.getPath()), Paths.get("resources/financeiro.db"), StandardCopyOption.REPLACE_EXISTING);
+    		else
+    			Files.copy(Paths.get(file.getPath()), Paths.get("resources/financeirodev.db"), StandardCopyOption.REPLACE_EXISTING);
+    	
+    	this.atualizarAll(null);
+    	}
+    	
+    }
+    
+    
+    @FXML
+    void salvar(ActionEvent event) throws IOException {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Salvar arquivo");
+    	Stage stage = new Stage();
+    	fileChooser.getExtensionFilters().add(new ExtensionFilter("*.db", "*.db"));
+    	if(!Config.get("ambiente").equals("dev"))
+    		fileChooser.setInitialFileName("financeiro.db");
+    	else
+    		fileChooser.setInitialFileName("financeirodev.db");
+    	File file = fileChooser.showSaveDialog(stage);
+    	
+
+    	if(file != null) {
+    		if(!Config.get("ambiente").equals("dev"))
+    			Files.copy(Paths.get("resources/financeiro.db"), Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);
+    		else
+    			Files.copy(Paths.get("resources/financeirodev.db"), Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);
+    	}
+    }
 
 	// SETS
 
@@ -518,6 +726,7 @@ public class HomeController implements Initializable {
 			loadTotalReceitas();
 			loadLancamentos();
 			loadTableDespesas();
+			loadTableCartao();
 			loadDiferenca();
 			loadGastoMedio();
 			loadGastosPorCategoria();
@@ -562,6 +771,47 @@ public class HomeController implements Initializable {
 						if(item < 0) {
 							this.setStyle("-fx-text-fill: #c92500;-fx-font-weight: bold;");
 						}
+					}
+				}
+			}
+		};
+
+		return cell;
+	}
+	
+	private TableCell<TipoCartao, Double> formatColumnCurrencyCartao(TableColumn<TipoCartao, Double> column) {
+		TableCell<TipoCartao, Double> cell = new TableCell<TipoCartao, Double>() {
+
+			@Override
+			protected void updateItem(Double item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty) {
+					setText(null);
+				} else {
+					if (item != null) {
+						this.setText(Uteis.convertToCurrency(item));
+						if(item < 0) {
+							this.setStyle("-fx-text-fill: #c92500;-fx-font-weight: bold;");
+						}
+					}
+				}
+			}
+		};
+
+		return cell;
+	}
+	
+	private TableCell<InvestimentoPlan, Double> formatColumnCurrencyPlan(TableColumn<InvestimentoPlan, Double> column) {
+		TableCell<InvestimentoPlan, Double> cell = new TableCell<InvestimentoPlan, Double>() {
+
+			@Override
+			protected void updateItem(Double item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty) {
+					setText(null);
+				} else {
+					if (item != null) {
+						this.setText(Uteis.convertToPercent(item));
 					}
 				}
 			}
