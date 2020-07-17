@@ -4,6 +4,7 @@ import (
     "fmt"
     "database/sql"
     "encoding/json"
+    "os"
     "io/ioutil"
     "log"
 	"net/http"
@@ -106,5 +107,6 @@ func main() {
         }
 
         fmt.Println(space)
-	}
+    }
+    os.Exit(0)
 }

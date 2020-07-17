@@ -9,7 +9,6 @@ import config.Config;
 public class StatusInvest {
 
 	public static String update() {
-		String result = "";
 		ProcessBuilder processBuilder = new ProcessBuilder();
 
 		if (Config.get("so").equals("windows")) {
@@ -33,18 +32,16 @@ public class StatusInvest {
 
 			int exitVal = process.waitFor();
 			if (exitVal == 0) {
-				System.out.println("Success!");
-				System.out.println(output);
-				result = output.toString();
+				return output.toString();
+			}else {
+				return output.toString();
 			}
 
 		} catch (IOException e) {
-			result = e.getMessage();
+			return e.getMessage();
 		} catch (InterruptedException e) {
-			result = e.getMessage();
+			return e.getMessage();
 		}
-
-		return result;
 
 	}
 
