@@ -146,7 +146,8 @@ public class OrcamentoService {
 
 		try {
 			Calendar cal = Calendar.getInstance();
-			Orcamento lastOrcamento = this.getAll(false).stream().sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId()))
+			Orcamento lastOrcamento = this.getAll(false).stream()
+					.sorted((o1, o2) -> o2.getDataFinal().compareTo(o1.getDataFinal()))
 					.collect(Collectors.toList()).get(1);
 
 			if (lastOrcamento.getLancamentos() != null && !lastOrcamento.getLancamentos().isEmpty())

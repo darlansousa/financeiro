@@ -72,7 +72,8 @@ public class GastoController implements Initializable {
 		
 		this.orcamentoService = new OrcamentoService();
 		this.orcamentos = this.orcamentoService.getAll(false).stream()
-				.sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId())).collect(Collectors.toList());
+				.sorted((o1, o2) -> o2.getDataFinal().compareTo(o1.getDataFinal()))
+				.collect(Collectors.toList());
 		
 		this.grupoService = new GrupoService();
 		this.grupos = grupoService.getAll().stream().filter(g -> g.getTipo().equals("FINANCEIRO"))

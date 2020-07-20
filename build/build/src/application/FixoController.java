@@ -24,6 +24,7 @@ import model.Grupo;
 import model.InvestimentoFixo;
 import service.InvestimentoFixoService;
 import util.Response;
+import util.Uteis;
 
 public class FixoController implements Initializable{
 	
@@ -86,13 +87,18 @@ public class FixoController implements Initializable{
     	if(this.dtResgate.getValue() != null)
     		 dataResgate = Date.from(this.dtResgate.getValue().atStartOfDay(defaultZoneId).toInstant());
     	
-    	if(!this.txtValorResgate.getText().isEmpty())
+    	if(!this.txtValorResgate.getText().isEmpty()) {
+    		if (!Uteis.isNumeric(this.txtValorResgate.getText())) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erro");
+				alert.setContentText("Valor inválido");
+				alert.showAndWait();
+				return;
+			}
     		valorResgate = new Double(this.txtValorResgate.getText().replace(",", "."));
-    	
-    	
-    	
-    	
-    	
+			
+    	}
+
     	Date dataCompra = Date.from(this.dtCompra.getValue().atStartOfDay(defaultZoneId).toInstant());
     	Date dataVenciemnto = Date.from(this.dtVencimento.getValue().atStartOfDay(defaultZoneId).toInstant());
     	

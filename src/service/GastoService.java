@@ -12,6 +12,7 @@ import repository.CategoriaRepository;
 import repository.GastoRepository;
 import repository.OrcamentoRepository;
 import util.Response;
+import util.Uteis;
 
 public class GastoService {
 
@@ -39,7 +40,7 @@ public class GastoService {
 			return resp;
 		}
 
-		if (valor == null || descricao.isEmpty()) {
+		if (valor == null || descricao.isEmpty() || (!Uteis.isNumeric(valor))) {
 			resp.setMessage("Valor inválido.");
 			return resp;
 		}
@@ -120,7 +121,7 @@ public class GastoService {
 			return resp;
 		}
 
-		if (valor == null || descricao.isEmpty()) {
+		if (valor == null || valor.isEmpty() || (!Uteis.isNumeric(valor))) {
 			resp.setMessage("Valor inválido.");
 			return resp;
 		}

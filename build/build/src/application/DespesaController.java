@@ -138,7 +138,6 @@ public class DespesaController implements Initializable{
 
 	public void setGasto(Gasto gasto) {
 		this.gasto = gasto;
-		System.out.println(gasto.getId());
 		if(gasto.getId() != null) {
 			this.lblTitle.setText("Editar");
 			this.preencherForm(gasto);

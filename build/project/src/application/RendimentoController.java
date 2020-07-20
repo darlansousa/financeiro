@@ -55,7 +55,8 @@ public class RendimentoController implements Initializable {
 		this.orcamentoService = new OrcamentoService();
 		this.categoriaService = new CategoriaService();
 		this.orcamentos = orcamentoService.getAll(false).stream()
-				.sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId())).collect(Collectors.toList());
+				.sorted((o1, o2) -> o2.getDataFinal().compareTo(o1.getDataFinal()))
+				.collect(Collectors.toList());
 		;
 		this.categorias = categoriaService.getAll().stream().filter(c -> c.getGrupo().getId().equals(10))
 				.collect(Collectors.toList());

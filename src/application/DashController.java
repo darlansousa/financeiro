@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+
 import config.Config;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.BubbleChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
@@ -55,9 +55,7 @@ import service.InvestimentoVariavelService;
 import service.ObjetivoService;
 import service.OrcamentoService;
 import util.BalancoItem;
-import util.BolhaObjetivo;
 import util.DespesaItem;
-import util.InvestimentoPlan;
 import util.Uteis;
 import util.StatusInvest;
 import util.TipoCartao;
@@ -142,15 +140,6 @@ public class DashController implements Initializable {
 	private TableColumn<BalancoItem, Double> clnReequilibrar;
 
 	@FXML
-	private BarChart<String, Double> chartCategoria;
-
-	@FXML
-	private CategoryAxis x;
-
-	@FXML
-	private NumberAxis y;
-
-	@FXML
 	private TableView<TipoCartao> tblCartao;
 
 	@FXML
@@ -184,28 +173,25 @@ public class DashController implements Initializable {
 	private Label lblTotalObjetivos;
 
 	@FXML
-	private TableView<InvestimentoPlan> tblInvestimentosPlan;
-
+	private GridPane gridObjetivo;
+	
+	private Boolean gridObjetivoLoaded = false;
+	
 	@FXML
-	private TableColumn<InvestimentoPlan, String> clnInvPlan;
-
+	private GridPane gridCategoria;
+	
+	private Boolean gridCategoriaLoaded = false;
+	
 	@FXML
-	private TableColumn<InvestimentoPlan, Double> clnPercentualPlan;
-
-	@FXML
-	private BubbleChart<NumberAxis, NumberAxis> chartObjetivos;
-
-	@FXML
-	private NumberAxis xObjetivo;
-
-	@FXML
-	private NumberAxis yObjetivo;
-
+	private GridPane gridInvestimento;
+	
+	private Boolean gridInvestimentoLoaded = false;
+	
 	public DashController() {
 		super();
 		this.orcamentoService = new OrcamentoService();
 		this.orcamentos = this.orcamentoService.getAll(false).stream()
-				.sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId())).collect(Collectors.toList());
+				.sorted((o1, o2) -> o2.getDataFinal().compareTo(o1.getDataFinal())).collect(Collectors.toList());
 		this.grupoService = new GrupoService();
 		this.investimentoVariavelService = new InvestimentoVariavelService();
 		this.investimentoFixoService = new InvestimentoFixoService();
@@ -215,7 +201,7 @@ public class DashController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.orcamentos = this.orcamentoService.getAll(true).stream()
-				.sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId())).collect(Collectors.toList());
+				.sorted((o1, o2) -> o2.getDataFinal().compareTo(o1.getDataFinal())).collect(Collectors.toList());
 		this.grupos = this.grupoService.getAll();
 		this.investimentosFixos = this.investimentoFixoService.getAll();
 		this.investimentosVariaveis = this.investimentoVariavelService.getAll();
@@ -224,7 +210,7 @@ public class DashController implements Initializable {
 		loadTotaisInvestimentos();
 		loadCarteira();
 		loadTableBalanco();
-		loadTablePercentualInv();
+		loadChartInvestimentos();
 		loadTotaisObjetivos();
 		loadChartObjetivos();
 
@@ -244,11 +230,7 @@ public class DashController implements Initializable {
 		this.clnGrupoInv.setCellValueFactory(new PropertyValueFactory<BalancoItem, String>("grupo"));
 		this.clnVlInvestido.setCellValueFactory(new PropertyValueFactory<BalancoItem, Double>("investido"));
 		this.clnReequilibrar.setCellValueFactory(new PropertyValueFactory<BalancoItem, Double>("reequilibrar"));
-
-		this.clnInvPlan.setCellValueFactory(new PropertyValueFactory<InvestimentoPlan, String>("investimento"));
-		this.clnPercentualPlan.setCellValueFactory(new PropertyValueFactory<InvestimentoPlan, Double>("percentual"));
-		this.clnPercentualPlan.setCellFactory(column -> this.formatColumnCurrencyPlan(column));
-
+		
 		this.clnVlInvestido.setCellFactory(column -> this.formatColumnCurrencyBalanco(column));
 		this.clnReequilibrar.setCellFactory(column -> this.formatColumnCurrencyBalanco(column));
 	}
@@ -286,7 +268,7 @@ public class DashController implements Initializable {
 	@FXML
 	void atualizarAll(ActionEvent event) {
 		this.orcamentos = this.orcamentoService.getAll(true).stream()
-				.sorted((o1, o2) -> Integer.compare(o2.getId(), o1.getId())).collect(Collectors.toList());
+				.sorted((o1, o2) -> o2.getDataFinal().compareTo(o1.getDataFinal())).collect(Collectors.toList());
 		this.grupos = this.grupoService.getAll();
 		this.investimentosFixos = this.investimentoFixoService.getAll();
 		this.investimentosVariaveis = this.investimentoVariavelService.getAll();
@@ -295,10 +277,9 @@ public class DashController implements Initializable {
 		loadTotaisInvestimentos();
 		loadCarteira();
 		loadTableBalanco();
-		loadTablePercentualInv();
+		loadChartInvestimentos();
 		loadTotaisObjetivos();
 		loadChartObjetivos();
-
 	}
 
 	@FXML
@@ -306,7 +287,7 @@ public class DashController implements Initializable {
 		loadTotaisInvestimentos();
 		loadCarteira();
 		loadTableBalanco();
-		loadTablePercentualInv();
+		loadChartInvestimentos();
 	}
 
 	@FXML
@@ -407,24 +388,43 @@ public class DashController implements Initializable {
 		if (this.selectedOrcamento == null)
 			return;
 
-		XYChart.Series<String, Double> dados = new XYChart.Series<String, Double>();
+		final NumberAxis xAxis = new NumberAxis();
+		final CategoryAxis yAxis = new CategoryAxis();
+		final BarChart<Number, String> bc = new BarChart<Number, String>(xAxis, yAxis);
+		
+		if(!this.gridCategoriaLoaded) {
+			this.gridCategoria.add(bc, 0, 0);
+			this.gridCategoriaLoaded = true;
+		}
+
+		bc.setTitle("Gastos por Categoria");
+		bc.setLegendVisible(false);
+		xAxis.setLabel("Valor");
+		xAxis.setTickLabelRotation(0);
+		yAxis.setLabel("Categoria");
+
+		XYChart.Series<Number, String> dados = new XYChart.Series<Number, String>();
+		
 		this.gastos.stream().filter(g -> g.getStatus().equals("BAIXADO")).map(g -> g.getCategoria()).distinct()
-				.map(c -> new XYChart.Data<String, Double>(c.getDescricao(),
-						c.getTotalGastosByOrcamento(this.selectedOrcamento)))
-				.sorted((d1, d2) -> Double.compare(d2.getYValue(), d1.getYValue()))
+				.map(c -> new XYChart.Data<Number, String>(
+						c.getTotalGastosByOrcamento(this.selectedOrcamento),
+						c.getDescricao()
+						))
+				.sorted((d1, d2) -> Double.compare(new Double(d1.getXValue().toString()), new Double(d2.getXValue().toString())))
 				.forEach(s -> dados.getData().add(s));
 
-		if (!this.chartCategoria.getData().isEmpty())
-			this.chartCategoria.getData().remove(0);
+		if (!bc.getData().isEmpty())
+			bc.getData().remove(0);
 
-		this.chartCategoria.getData().add(dados);
+		bc.getData().add(dados);
 
-		this.chartCategoria.setLegendVisible(false);
+		bc.setLegendVisible(false);
 		dados.getData().stream().forEach(d -> {
 			if (d.getNode() != null)
 				d.getNode().setStyle("-fx-background-color: " + Uteis.getRandonColor() + ";");
 		});
-		;
+		
+		
 
 	}
 	// INVESTIMENTOS
@@ -504,34 +504,59 @@ public class DashController implements Initializable {
 		this.tblEquilibrio.setItems(obsBalancoIntem);
 	}
 
-	private void loadTablePercentualInv() {
-		if (this.investimentosFixos == null || this.investimentosVariaveis == null)
-			return;
-
-		List<Lancamento> lancamentos = this.objetivoService.getAllLancamentos();
-
-		List<InvestimentoPlan> dados = new ArrayList<InvestimentoPlan>();
+	private void loadChartInvestimentos() {
+		final NumberAxis xAxis = new NumberAxis(0,100,10);
+		final CategoryAxis yAxis = new CategoryAxis();
+		final BarChart<Number, String> bc = new BarChart<Number, String>(xAxis, yAxis);
+		
+		if(!this.gridInvestimentoLoaded) {
+			this.gridInvestimento.add(bc, 0, 0);
+			this.gridInvestimentoLoaded = true;
+		}
+		
+		bc.setTitle("Planejamentos dos investimentos");
+		bc.setLegendVisible(false);
+		xAxis.setLabel("Percentual");
+		xAxis.setTickLabelRotation(0);
+		yAxis.setLabel("Investimentos");
+		
+		XYChart.Series<Number, String> dados = new XYChart.Series<Number, String>();
+	
 		this.investimentosFixos.stream().filter(ivf -> ivf.getResgatado().equals("N")).forEach(ivf -> {
-			Double planejado = lancamentos.stream().filter(l -> l.getIdInvestimento() != null)
+			Double planejado = objetivoService.getAllLancamentos().stream().filter(l -> l.getIdInvestimento() != null)
 					.filter(l -> l.getTipoInvestimento().equals("FIXO"))
 					.filter(l -> l.getIdInvestimento().equals(ivf.getId())).map(l -> l.getValor())
 					.reduce((la1, la2) -> la1 + la2).orElse(new Double(0));
-			dados.add(new InvestimentoPlan(ivf.getDescricao(), (planejado / ivf.getValorAplicado()) * 100));
+			
+			dados.getData().add(new XYChart.Data<Number, String>(
+					((planejado / ivf.getValorAplicado() * 100)),
+					ivf.getDescricao()
+					));
 
 		});
 
 		this.investimentosVariaveis.stream().filter(ivv -> ivv.getVendido().equals("N")).forEach(ivv -> {
-			Double planejado = lancamentos.stream().filter(l -> l.getIdInvestimento() != null)
+			Double planejado = objetivoService.getAllLancamentos().stream().filter(l -> l.getIdInvestimento() != null)
 					.filter(l -> l.getTipoInvestimento().equals("VARIAVEL"))
 					.filter(l -> l.getIdInvestimento().equals(ivv.getId())).map(l -> l.getValor())
 					.reduce((la1, la2) -> la1 + la2).orElse(new Double(0));
-
-			dados.add(new InvestimentoPlan(ivv.getDescricao(), (planejado / ivv.getTotal()) * 100));
+			
+			dados.getData().add(new XYChart.Data<Number, String>(
+					((planejado / ivv.getTotal()) * 100),
+					ivv.getDescricao()
+					));
 
 		});
-
-		ObservableList<InvestimentoPlan> obsInvPlan = FXCollections.observableArrayList(dados);
-		this.tblInvestimentosPlan.setItems(obsInvPlan);
+		
+		if (!bc.getData().isEmpty())
+			bc.getData().remove(0);
+		
+		bc.getData().add(dados);
+		
+		dados.getData().stream().forEach(d -> {
+			if (d.getNode() != null)
+				d.getNode().setStyle("-fx-background-color: " + Uteis.getRandonColor() + ";");
+		});
 	}
 
 	// OBJETIVOS
@@ -549,28 +574,43 @@ public class DashController implements Initializable {
 		this.lblTotalObjetivosPendentes.setText(objetivosPendentes.toString());
 	}
 
-	@SuppressWarnings({ "unused", "unchecked", "rawtypes" })
 	private void loadChartObjetivos() {
 		if (this.objetivos == null)
 			return;
 
-		this.objetivos.stream()
-		.filter(o -> !o.getDescricao().equals("Aposentadoria"))
-		.map(o -> new BolhaObjetivo(
-				o.getDescricao(),
-				o.getTotalAplicado(),
-				100.0,
-				o.getTotalOrcado()
-				)).forEach(bo -> {
-					XYChart.Series serie = new XYChart.Series();
-					serie.setName(bo.getObjetivo());
-					serie.getData().add(new XYChart.Data<Double, Double>(
-							bo.getValorTotal(),
-							bo.getValorAtingido(),
-							bo.getPercentual()
-							));
-					this.chartObjetivos.getData().add(serie);
+		final NumberAxis xAxis = new NumberAxis(0,100,10);
+		final CategoryAxis yAxis = new CategoryAxis();
+		final BarChart<Number, String> bc = new BarChart<Number, String>(xAxis, yAxis);
+		
+		if(!this.gridObjetivoLoaded) {
+			this.gridObjetivo.add(bc, 0, 0);
+			this.gridObjetivoLoaded = true;
+		}
+		
+		bc.setTitle("Percentual de conclusão dos objetivos");
+		bc.setLegendVisible(false);
+		xAxis.setLabel("Percentual");
+		xAxis.setTickLabelRotation(0);
+		yAxis.setLabel("Objetivos");
+
+		XYChart.Series<Number, String> dados = new XYChart.Series<Number, String>();
+		this.objetivos.stream().filter(o -> !o.getDescricao().equals("Aposentadoria")).forEach(o -> {
+			dados.getData().add(new XYChart.Data<Number, String>((o.getPercentualAtingido() * 100), o.getDescricao()));
+		});
+		if (!bc.getData().isEmpty())
+			bc.getData().remove(0);
+		
+		bc.getData().add(dados);
+		
+		dados.getData().stream().forEach(dado -> {
+			if (dado.getNode() != null) {
+				this.objetivos.stream().forEach(o -> {
+					if (o.getDescricao().equals(dado.getYValue()))
+						dado.getNode().setStyle("-fx-background-color: #" + o.getCor().substring(0, o.getCor().length() - 2).replace("0x", "") + ";");
 				});
+
+			}
+		});
 	}
 
 	// MENU
@@ -775,25 +815,6 @@ public class DashController implements Initializable {
 						if (item < 0) {
 							this.setStyle("-fx-text-fill: #c92500;-fx-font-weight: bold;");
 						}
-					}
-				}
-			}
-		};
-
-		return cell;
-	}
-
-	private TableCell<InvestimentoPlan, Double> formatColumnCurrencyPlan(TableColumn<InvestimentoPlan, Double> column) {
-		TableCell<InvestimentoPlan, Double> cell = new TableCell<InvestimentoPlan, Double>() {
-
-			@Override
-			protected void updateItem(Double item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty) {
-					setText(null);
-				} else {
-					if (item != null) {
-						this.setText(Uteis.convertToPercent(item));
 					}
 				}
 			}

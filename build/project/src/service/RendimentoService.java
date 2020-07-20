@@ -10,6 +10,7 @@ import repository.CategoriaRepository;
 import repository.OrcamentoRepository;
 import repository.RendimentoRepository;
 import util.Response;
+import util.Uteis;
 
 public class RendimentoService {
 
@@ -40,10 +41,11 @@ public class RendimentoService {
 			return resp;
 		}
 
-		if (valor == null || valor.isEmpty()) {
+		if (valor == null || valor.isEmpty() || (!Uteis.isNumeric(valor))) {
 			resp.setMessage("Valor inválido.");
 			return resp;
 		}
+		
 		if (recebido == null) {
 			resp.setMessage("Campo Recebido inválido.");
 			return resp;
@@ -112,10 +114,11 @@ public class RendimentoService {
 			return resp;
 		}
 
-		if (valor == null || valor.isEmpty()) {
+		if (valor == null || valor.isEmpty() || (!Uteis.isNumeric(valor))) {
 			resp.setMessage("Valor inválido.");
 			return resp;
 		}
+		
 		if (recebido == null) {
 			resp.setMessage("Campo recebido inválido.");
 			return resp;

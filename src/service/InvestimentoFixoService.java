@@ -8,6 +8,7 @@ import model.InvestimentoFixo;
 import repository.GrupoRepository;
 import repository.InvestimentoFixoRepository;
 import util.Response;
+import util.Uteis;
 
 public class InvestimentoFixoService {
 	
@@ -49,12 +50,12 @@ public class InvestimentoFixoService {
 			return resp;
 		}
 
-		if (valorAplicado == null || valorAplicado.isEmpty()) {
+		if (valorAplicado == null || valorAplicado.isEmpty() || (!Uteis.isNumeric(valorAplicado))) {
 			resp.setMessage("Valor Aplicado inválido.");
 			return resp;
 		}
 		
-		if (valorLiquido == null || valorLiquido.isEmpty()) {
+		if (valorLiquido == null || valorLiquido.isEmpty() || (!Uteis.isNumeric(valorLiquido))) {
 			resp.setMessage("Valor Liquido inválido.");
 			return resp;
 		}
@@ -139,12 +140,12 @@ public class InvestimentoFixoService {
 			return resp;
 		}
 
-		if (valorAplicado == null || valorAplicado.isEmpty()) {
+		if (valorAplicado == null || valorAplicado.isEmpty() || (!Uteis.isNumeric(valorAplicado))) {
 			resp.setMessage("Valor Aplicado inválido.");
 			return resp;
 		}
 		
-		if (valorLiquido == null || valorLiquido.isEmpty()) {
+		if (valorLiquido == null || valorLiquido.isEmpty() || (!Uteis.isNumeric(valorLiquido))) {
 			resp.setMessage("Valor Liquido inválido.");
 			return resp;
 		}

@@ -111,6 +111,14 @@ public class ItemObjetivoController implements Initializable{
 
     @FXML
     void salvar(ActionEvent event) {
+    	if (!Uteis.isNumeric(this.txtValor.getText())) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erro");
+			alert.setContentText("Valor inválido");
+			alert.showAndWait();
+			return;
+		}
+    	
     	ItemObjetivo item = new ItemObjetivo(this.txtDescricao.getText(),new Double(this.txtValor.getText()), this.objetivo);
     	
     	Response resp = this.service.saveItem(item);

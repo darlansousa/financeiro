@@ -8,6 +8,7 @@ import model.InvestimentoVariavel;
 import repository.GrupoRepository;
 import repository.InvestimentoVariavelRepository;
 import util.Response;
+import util.Uteis;
 
 public class InvestimentoVariavelService {
 
@@ -24,7 +25,7 @@ public class InvestimentoVariavelService {
 	}
 
 	public Response update(Integer id, String ativo, String descricao, String quantidade, Date dataCompra,
-			String valorUnidade, Date dataVenda, Double valorVenda, String vendido, Integer idGrupo) {
+			String valorUnidade, Date dataVenda, Double valorVenda, String vendido,Double valorAtual, String dataAtualizacao, Integer idGrupo) {
 		Response resp = new Response(false, "Erro desconhecido.");
 
 		if (id == null) {
@@ -50,7 +51,7 @@ public class InvestimentoVariavelService {
 			return resp;
 		}
 
-		if (valorUnidade == null || valorUnidade.isEmpty()) {
+		if (valorUnidade == null || valorUnidade.isEmpty() || (!Uteis.isNumeric(valorUnidade))) {
 			resp.setMessage("Valor unidade inválido.");
 			return resp;
 		}
@@ -80,6 +81,12 @@ public class InvestimentoVariavelService {
 
 		InvestimentoVariavel investimento = new InvestimentoVariavel(id,ativo, descricao, new Integer(quantidade), dataCompra,
 				new Double(valorUnidade), null, dataVenda, valorVenda, null, vendido, grupo);
+		
+		if(dataAtualizacao != null)
+			investimento.setDataAtualizacao(dataAtualizacao);
+		
+		if(valorAtual != null)
+			investimento.setValorUnidadeAtual(valorAtual);
 
 		InvestimentoVariavel invSaved = this.repo.save(investimento);
 
@@ -117,7 +124,7 @@ public class InvestimentoVariavelService {
 			return resp;
 		}
 
-		if (valorUnidade == null || valorUnidade.isEmpty()) {
+		if (valorUnidade == null || valorUnidade.isEmpty() || (!Uteis.isNumeric(valorUnidade))) {
 			resp.setMessage("Valor unidade inválido.");
 			return resp;
 		}

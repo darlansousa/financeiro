@@ -4,15 +4,15 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class Uteis {
-	
+
 	public static String convertToCurrency(Double valor) {
-		
-		Locale localeBR = new Locale( "pt", "BR" );  
-		NumberFormat dinheiroBR = NumberFormat.getCurrencyInstance(localeBR);  
-		
+
+		Locale localeBR = new Locale("pt", "BR");
+		NumberFormat dinheiroBR = NumberFormat.getCurrencyInstance(localeBR);
+
 		return dinheiroBR.format(valor);
 	}
-	
+
 	public static String getRandonColor() {
 		String letters = "0123456789ABCDEF";
 		String color = "#";
@@ -22,13 +22,13 @@ public class Uteis {
 		}
 		return color;
 	}
-	
-public static String convertToPercent(Double valor) {
-		
-		
-		
-		return valor.intValue()+"%";
+
+	public static String convertToPercent(Double valor) {
+		return valor.intValue() + "%";
 	}
 	
+	public static boolean isNumeric(String string) {
+        return string.matches("-?\\d+(\\.\\d+)?");
+	}
 
 }

@@ -10,6 +10,7 @@ import repository.ItemObjetivoRepository;
 import repository.LancamentoRepository;
 import repository.ObjetivoRepository;
 import util.Response;
+import util.Uteis;
 
 public class ObjetivoService {
 
@@ -35,7 +36,7 @@ public class ObjetivoService {
 			return resp;
 		}
 
-		if (valor == null || valor.isEmpty()) {
+		if (valor == null || valor.isEmpty() || (!Uteis.isNumeric(valor))) {
 			resp.setMessage("Valor invalido.");
 			return resp;
 		}
@@ -85,7 +86,7 @@ public class ObjetivoService {
 			return resp;
 		}
 
-		if (valor == null || valor.isEmpty()) {
+		if (valor == null || valor.isEmpty() || (!Uteis.isNumeric(valor))) {
 			resp.setMessage("Valor invalido.");
 			return resp;
 		}

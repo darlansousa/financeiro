@@ -34,6 +34,7 @@ import service.InvestimentoVariavelService;
 import service.ObjetivoService;
 import util.Investimento;
 import util.Response;
+import util.Uteis;
 
 public class LancamentoController implements Initializable{
 	private CategoriaService categoriaService;
@@ -97,6 +98,14 @@ public class LancamentoController implements Initializable{
     	ZoneId defaultZoneId = ZoneId.systemDefault();
     	Date data = Date.from(this.dtData.getValue().atStartOfDay(defaultZoneId).toInstant());
     	Response resp = new Response(false, "Erro ao salvar");
+    	
+    	if (!Uteis.isNumeric(this.txtValor.getText())) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erro");
+			alert.setContentText("Valor inválido");
+			alert.showAndWait();
+			return;
+		}
     	
     	lancamento.setValor(new Double(this.txtValor.getText().replace(",", ".")));
     	lancamento.setData(data);
