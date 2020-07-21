@@ -237,7 +237,7 @@ public class DashController implements Initializable {
 
 	@FXML
 	void atualizar(ActionEvent event) {
-		String result = StatusInvest.update();
+		String result = StatusInvest.update(this.investimentoVariavelService);
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Api Status invest");

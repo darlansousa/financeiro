@@ -65,6 +65,11 @@
 			</fileset>
 		</copy>
 		<copy todir="externalLibs">
+			<fileset dir="/home/darlan/Documents/financeiro/arquivos">
+				<filename name="json.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
 			<fileset dir="/home/darlan/Documents/financeiro/arquivos/hibernate">
 				<filename name="jta.jar"/>
 			</fileset>
@@ -113,12 +118,12 @@
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="/home/darlan/eclipse-workspace/financeiro">
-				<include name="src/**" />
+				<include name="resources/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
 			<fileset dir="/home/darlan/eclipse-workspace/financeiro">
-				<include name="resources/**" />
+				<include name="src/**" />
 			</fileset>
 		</copy>
 	
@@ -133,6 +138,7 @@
 		<!-- Copy project-libs references -->
 		<copy todir="build/libs">
 			<fileset dir="externalLibs">
+				<include name="json.jar"/>
 				<include name="hibernate-commons-annotations.jar"/>
 				<include name="antlr-2.7.6.jar"/>
 				<include name="commons-collections-2.1.1.jar"/>

@@ -166,6 +166,10 @@ public class InvestimentoVariavelService {
 		return resp;
 
 	}
+	
+	public void save(InvestimentoVariavel iv) {
+		this.repo.save(iv);
+	}
 
 	public Response removeById(Integer id) {
 		Response resp = new Response(false, "Erro ao remover");

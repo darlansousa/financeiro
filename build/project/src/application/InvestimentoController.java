@@ -138,7 +138,7 @@ public class InvestimentoController implements Initializable {
 
 	@FXML
 	void atualizar(ActionEvent event) {
-		StatusInvest.update();
+		StatusInvest.update(this.investimentoVariavelService);
 		Optional<String> data = this.investimentosVariaveis.stream().map(iv -> iv.getDataAtualizacao()).findFirst();
 
 		if (data.isPresent()) {

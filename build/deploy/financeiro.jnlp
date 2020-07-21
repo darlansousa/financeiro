@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="financeiro.jar" size="21267347" download="eager" />
+    <jar href="financeiro.jar" size="21268955" download="eager" />
     <jar href="libs/antlr-2.7.6.jar" size="443432" download="eager" />
     <jar href="libs/c3p0-0.9.1.2.jar" size="610790" download="eager" />
     <jar href="libs/cglib-nodep-2.1_3.jar" size="324238" download="eager" />
@@ -23,6 +23,7 @@
     <jar href="libs/hibernate3.jar" size="2255753" download="eager" />
     <jar href="libs/javassist-3.22.0-GA.jar" size="739582" download="eager" />
     <jar href="libs/jboss-archive-browsing.jar" size="413698" download="eager" />
+    <jar href="libs/json.jar" size="65966" download="eager" />
     <jar href="libs/jta.jar" size="8812" download="eager" />
     <jar href="libs/log4j-1.2.11.jar" size="350627" download="eager" />
     <jar href="libs/mysql-connector-java-8.0.20.jar" size="2385601" download="eager" />
