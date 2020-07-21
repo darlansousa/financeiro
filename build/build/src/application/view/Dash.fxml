@@ -203,12 +203,14 @@
                               <Label id="card-currency" fx:id="lblTotalInvestido" layoutX="14.0" layoutY="54.0" text="R$ 0,00" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
                            </children>
                         </AnchorPane>
-                        <TableView id="card" fx:id="tblInvestimentosPlan" layoutX="656.0" layoutY="159.0" prefHeight="441.0" prefWidth="564.0" AnchorPane.leftAnchor="650.0" AnchorPane.topAnchor="160.0">
-                          <columns>
-                            <TableColumn fx:id="clnInvPlan" prefWidth="335.0" text="Investimento" />
-                            <TableColumn fx:id="clnPercentualPlan" minWidth="0.0" prefWidth="227.0" text="Percentual Planejado" />
-                          </columns>
-                        </TableView>
+                        <GridPane id="card" fx:id="gridInvestimento" layoutX="648.0" layoutY="161.0" prefHeight="439.0" prefWidth="648.0" AnchorPane.topAnchor="160.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
                      </children>
                   </AnchorPane>
               </content>

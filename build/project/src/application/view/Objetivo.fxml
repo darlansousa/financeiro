@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ObjetivoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ObjetivoController">
    <top>
       <AnchorPane id="paleta" prefHeight="89.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
@@ -55,6 +55,15 @@
                      </image>
                   </ImageView>
                </graphic></Button>
+            <Button fx:id="btnLancamentos" disable="true" layoutX="501.0" layoutY="50.0" mnemonicParsing="false" onAction="#openLancamentos" prefHeight="26.0" prefWidth="152.0" text="Lançamentos" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="500.0">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/icons8-conta-30.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </top>
@@ -95,6 +104,7 @@
             <Label layoutX="20.0" layoutY="205.0" text="Cor" textFill="#646464" AnchorPane.leftAnchor="20.0" />
             <TextField fx:id="txtOrcado" disable="true" layoutX="707.0" layoutY="200.0" prefWidth="129.0" AnchorPane.rightAnchor="19.0" />
             <Label layoutX="701.0" layoutY="205.0" text="Total Orçado" textFill="#646464" AnchorPane.rightAnchor="160.0" />
+            <Label fx:id="lblPercentual" alignment="CENTER" layoutX="23.0" layoutY="23.0" prefHeight="16.0" prefWidth="499.0" text="0%" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
          </children>
       </AnchorPane>
    </center>
